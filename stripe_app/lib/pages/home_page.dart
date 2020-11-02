@@ -49,12 +49,11 @@ class HomePage extends StatelessWidget {
                   child: Hero(
                     tag: tarjeta.cardNumber,
                     child: CreditCardWidget(
-                      cardNumber: tarjeta.cardNumberHidden,
-                      expiryDate: tarjeta.expiracyDate,
-                      cardHolderName: tarjeta.cardHolderName,
-                      cvvCode: tarjeta.cvv,
-                      showBackView: false,
-                      
+                    cardNumber: tarjeta.cardNumberHidden,
+                    expiryDate: tarjeta.expiracyDate,
+                    cardHolderName: tarjeta.cardHolderName,
+                    cvvCode: tarjeta.cvv,
+                    showBackView: false,                    
                     ),
                   ),
                 );
@@ -62,7 +61,6 @@ class HomePage extends StatelessWidget {
               
               ),
           ),
-
           Positioned(
             bottom: 0,
             child: TotalPayButtom(),

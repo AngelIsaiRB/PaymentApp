@@ -11,14 +11,14 @@ class PagarBloc extends Bloc<PagarEvent, PagarState> {
   PagarBloc() : super(PagarState());
 
   @override
-  Stream<PagarState> mapEventToState(
-    PagarEvent event,
-  ) async* {
+  Stream<PagarState> mapEventToState(PagarEvent event, ) async* {
+
    if(event is OnSeleccionarTarjeta){
      yield state.copywith(tarjetaActiva: true, tarjeta: event.tarjeta);
    }
    else if (event is OnDescativarTarjeta){
      yield state..copywith(tarjetaActiva: false, );
    }
+   
   }
 }
