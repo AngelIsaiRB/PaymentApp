@@ -17,7 +17,7 @@ class PagarBloc extends Bloc<PagarEvent, PagarState> {
      yield state.copywith(tarjetaActiva: true, tarjeta: event.tarjeta);
    }
    else if (event is OnDescativarTarjeta){
-     yield state..copywith(tarjetaActiva: false, );
+     yield state.copywith(tarjetaActiva: false, );
    }
    
   }
