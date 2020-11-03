@@ -17,6 +17,13 @@ class TarjetaPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text("Pagar"),
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios), 
+            onPressed: (){
+              //
+              Navigator.of(context).pop();              
+
+            }),
           centerTitle: true,
         ),
         body: Stack(
