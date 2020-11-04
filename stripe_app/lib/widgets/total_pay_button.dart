@@ -5,10 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:stripe_app/bloc/pagar/pagar_bloc.dart';
+import 'package:stripe_app/helpers/helpers.dart';
+import 'package:stripe_app/services/stripe_service.dart';
+import 'package:stripe_payment/stripe_payment.dart';
 
 class TotalPayButtom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final pagarBloc = context.bloc<PagarBloc>().state;
    final width = MediaQuery.of(context).size.width;
    return Container(
      width: width,
@@ -30,7 +34,7 @@ class TotalPayButtom extends StatelessWidget {
            mainAxisAlignment: MainAxisAlignment.center,
            children: [             
              Text("Total", style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
-             Text("255.89 USD", style: TextStyle(fontSize: 20,), )
+             Text("${pagarBloc.montoPagar} ${pagarBloc.moneda}", style: TextStyle(fontSize: 20,), )
            ],
          ),
          
@@ -74,7 +78,33 @@ class _BtnPay extends StatelessWidget {
           Text("  Pagar", style: TextStyle(color: Colors.white, fontSize: 22),),
         ],
       ),
-      onPressed: (){},      
+      onPressed: ()async {
+        mostrarLoadinf(context);
+        final stripeService = new StripeService();
+        final pagarBloc= context.bloc<PagarBloc>().state;
+        final mesAnio = pagarBloc.tarjeta.expiracyDate.split("/");
+
+        final resp = await stripeService.pagarconTarjetaExistente(
+          amount: pagarBloc.montopagarString, 
+          currency: pagarBloc.moneda, 
+          card: CreditCard(
+            number: pagarBloc.tarjeta.cardNumber,
+            expMonth: int.parse(mesAnio[0]),
+            expYear: int.parse(mesAnio[1]),
+             cvc: pagarBloc.tarjeta.cvv // no necesario 
+          )
+          );
+        Navigator.pop(context);
+            if (resp.ok){
+              mostrarAlerta(context, "Tarjeta OK", "Todo correcto");
+            }
+            else{
+              mostrarAlerta(context, "Algo salio mal", resp.msg);
+            }
+
+
+
+      },      
     );
   }
 
