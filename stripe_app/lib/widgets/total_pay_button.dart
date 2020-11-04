@@ -123,7 +123,14 @@ class _BtnPay extends StatelessWidget {
           Text(" Pay", style: TextStyle(color: Colors.white, fontSize: 22),),
         ],
       ),
-      onPressed: (){},      
+      onPressed: ()async {
+        final stripeService = new StripeService();
+        final pagarBloc= context.bloc<PagarBloc>().state;
+        final resp = await stripeService.pagarApplePayGooglePay(
+          amount: pagarBloc.montopagarString, 
+          currency: pagarBloc.moneda
+        );
+      },      
     );
   }
 }
