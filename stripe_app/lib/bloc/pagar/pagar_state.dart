@@ -27,6 +27,7 @@ class PagarState  {
     tarjeta      : tarjeta       ?? this.tarjeta,
   );
 
+  String get montopagarString => "${(this.montoPagar*100).floor()}";
 
 
 }
